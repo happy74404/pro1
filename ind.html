@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Card</title>
+    <style>
+        /* General Styling */
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #201f1f;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Background Effects */
+        .background {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out 0.5s forwards;
+        }
+
+        /* Background Transition */
+        .background-transition {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #1a1c20 0%, #2c3e50 50%, #3498db 100%);
+            opacity: 0;
+            z-index: -2;
+            animation: backgroundFadeIn 3s ease-in-out 2s forwards;
+        }
+
+        @keyframes backgroundFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Twinkling Stars */
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png'),
+                        url('https://www.transparenttextures.com/patterns/stardust.png'),
+                        url('https://www.transparenttextures.com/patterns/stardust.png');
+            background-position: 0 0, 50% 50%, 25% 25%;
+            opacity: 0.6;
+            animation: twinkle 8s infinite linear;
+            filter: brightness(1.4) contrast(1.2);
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(1) rotate(0deg); }
+            50% { opacity: 0.8; transform: scale(1.1) rotate(1deg); }
+            100% { opacity: 0.3; transform: scale(1) rotate(0deg); }
+        }
+
+        /* Floating Sparkles */
+        .sparkle {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: radial-gradient(circle at center, #fff 0%, rgba(255,255,255,0.9) 30%, transparent 70%);
+            border-radius: 50%;
+            animation: sparkleFloat 4s infinite ease-in-out;
+            opacity: 0;
+        }
+
+        .sparkle1 { left: 12%; top: 25%; animation-delay: 0s; }
+        .sparkle2 { left: 35%; top: 45%; animation-delay: 0.4s; }
+        .sparkle3 { left: 28%; top: 65%; animation-delay: 0.8s; }
+        .sparkle4 { left: 45%; top: 15%; animation-delay: 1.2s; }
+        .sparkle5 { left: 67%; top: 35%; animation-delay: 1.6s; }
+        .sparkle6 { left: 82%; top: 55%; animation-delay: 2.0s; }
+        .sparkle7 { left: 15%; top: 75%; animation-delay: 2.4s; }
+        .sparkle8 { left: 92%; top: 25%; animation-delay: 2.8s; }
+        .sparkle9 { left: 55%; top: 85%; animation-delay: 3.2s; }
+        .sparkle10 { left: 75%; top: 15%; animation-delay: 3.6s; }
+
+        @keyframes sparkleFloat {
+            0% { transform: translate(0, 20px) scale(0); opacity: 0; }
+            50% { transform: translate(15px, -25px) scale(1.5); opacity: 1; }
+            100% { transform: translate(-15px, -70px) scale(0); opacity: 0; }
+        }
+
+        /* Book Styling */
+        .book {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            perspective: 2000px;
+            touch-action: pan-x;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 1.5s ease-in-out 1s forwards;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Cover and Pages */
+        .cover, .page1, .page2 {
+            position: absolute;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-radius: 20px;
+            transition: transform 1.5s ease;
+            transform-origin: left;
+            width: 600px;    /* Same width for all */
+            height: 400px;   /* Same height for all */
+        }
+
+        /* Cover Side */
+        .cover {
+            background: linear-gradient(45deg, #1a1c20, #2c3e50, #3498db);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            transform: rotateY(0);
+            box-shadow: 8px 8px 25px rgba(0, 0, 0, 0.5),
+                       inset 0 0 50px rgba(52, 152, 219, 0.3);
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+            z-index: 3;
+            border: 2px solid rgba(52, 152, 219, 0.3);
+            backdrop-filter: blur(5px);
+            background-image: 
+                linear-gradient(45deg, #1a1c20, #2c3e50, #3498db),
+                repeating-linear-gradient(45deg, 
+                    transparent 0, 
+                    transparent 10px, 
+                    rgba(255, 255, 255, 0.1) 10px, 
+                    rgba(255, 255, 255, 0.1) 20px
+                );
+        }
+
+        /* Pages */
+        .page1, .page2 {
+            background: linear-gradient(135deg, #fff 0%, #f8f8f8 50%, #eee 100%);
+            flex-direction: column;
+            padding: 50px;
+            box-sizing: border-box;
+            box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.3);
+            transform: rotateY(0);
+            color: #2c3e50;
+        }
+
+        .page1 { 
+            z-index: 2;
+            background-image: linear-gradient(135deg, #f8a343 0%, #fbe0c5 50%, #f8a343 100%);
+        }
+        
+        .page2 { 
+            z-index: 1;
+            background-image: linear-gradient(135deg, #f8a343 0%, #fbe0c5 50%, #f8a343 100%);
+        }
+
+        .page1 h1 {
+            color: #e74c3c;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        .page1 p, .page2 p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 15px 0;
+        }
+
+        .page2 h2 {
+            color: #e74c3c;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        .signature {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 1.5em !important;
+            color: #2c3e50;
+            margin-top: 30px !important;
+        }
+
+        /* Book States */
+        .book[data-state="cover"] .cover { transform: rotateY(0); }
+        .book[data-state="cover"] .page1 { transform: rotateY(0); }
+        .book[data-state="cover"] .page2 { transform: rotateY(0); }
+
+        .book[data-state="page1"] .cover { transform: rotateY(-180deg); }
+        .book[data-state="page1"] .page1 { transform: rotateY(0); }
+        .book[data-state="page1"] .page2 { transform: rotateY(0); }
+
+        .book[data-state="page2"] .cover { transform: rotateY(-180deg); }
+        .book[data-state="page2"] .page1 { transform: rotateY(-180deg); }
+        .book[data-state="page2"] .page2 { transform: rotateY(0); }
+    </style>
+</head>
+<body>
+
+    <!-- Background with stars and sparkles -->
+    <div class="background">
+        <div class="stars"></div>
+        <div class="sparkle sparkle1"></div>
+        <div class="sparkle sparkle2"></div>
+        <div class="sparkle sparkle3"></div>
+        <div class="sparkle sparkle4"></div>
+        <div class="sparkle sparkle5"></div>
+        <div class="sparkle sparkle6"></div>
+        <div class="sparkle sparkle7"></div>
+        <div class="sparkle sparkle8"></div>
+        <div class="sparkle sparkle9"></div>
+        <div class="sparkle sparkle10"></div>
+    </div> 
+
+    <!-- Background Transition -->
+    <div class="background-transition"></div>
+
+    <!-- Book Birthday Card -->
+    <div class="book" data-state="cover">
+        <div class="cover">
+            <h2>✨ Swipe to Open ✨</h2>
+        </div>
+        <div class="page1">
+            <h1>Happy Birthday! 🎂</h1>
+            <p>On this special day, I wish you endless joy, laughter, and all the happiness you deserve! </p>
+            <p>🌟 May every moment of your life be filled with bright smiles, good times, and great memories. 🎉</p>
+            <p>Enjoy every second of today, as you celebrate you! 💖</p>
+            <p>(Swipe to continue)</p>
+        </div>
+        <div class="page2">
+            <h2>Wishing you the happiest of birthdays! 🎉</h2>
+            <p>I hope today is filled with laughter, joy, and unforgettable memories. 🌟 </p>
+            <p>You truly deserve all the happiness in the world! 💖 </p>
+            <p>Enjoy every moment of this special day!</p>
+            
+        </div>
+    </div>
+
+    <script>
+        const book = document.querySelector('.book');
+        const states = ['cover', 'page1', 'page2'];
+        let currentIndex = 0; // Track the current state index
+
+        // Handle touch events (for mobile)
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        book.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        book.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        // Handle keyboard events (for laptops)
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight') {
+                changePage(1); // Swipe left to next page
+            } else if (e.key === 'ArrowLeft') {
+                changePage(-1); // Swipe right to previous page
+            }
+        });
+
+        function handleSwipe() {
+            const swipeDistance = touchEndX - touchStartX;
+            if (Math.abs(swipeDistance) > 50) { // Minimum swipe distance
+                changePage(swipeDistance < 0 ? 1 : -1);
+            }
+        }
+
+        // Function to change pages
+        function changePage(direction) {
+            currentIndex = Math.min(Math.max(currentIndex + direction, 0), states.length - 1);
+            book.dataset.state = states[currentIndex];
+        }
+    </script>
+
+</body>
+</html>

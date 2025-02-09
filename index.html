@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Happy Birthday</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Dancing Script', cursive;
+            overflow: hidden;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+            flex-direction: column;
+        }
+
+        /* SLIDES */
+        .slide {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+        }
+
+        /* FIRST SLIDE */
+        .first--slide {
+            background: linear-gradient(135deg, #1E3F66, #2E5984);
+            color: white;
+        }
+
+        .slide--content {
+            text-align: center;
+            position: relative;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .slide--content h1 {
+            font-size: 5rem;
+            margin-bottom: 0.2em;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+            letter-spacing: 2px;
+            animation: slideDown 1.5s ease-out;
+        }
+
+        .slide--content h2 {
+            font-size: 3.5rem;
+            color: #FFDD67;
+            text-shadow: 0 0 15px rgba(255, 221, 103, 0.8);
+            letter-spacing: 3px;
+            opacity: 0;
+            transform: scale(0.5);
+            animation: popIn 1.5s ease-out 0.8s forwards;
+        }
+
+        /* SECOND SLIDE */
+        .third--canvas {
+            background: linear-gradient(135deg, #0B2447, #19376D);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+        }
+
+        /* STYLISH ALPHABETS */
+        .center--line h1 {
+            font-size: 6rem;
+            letter-spacing: 8px;
+            display: flex;
+            justify-content: center;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .center--line h1 span {
+            display: inline-block;
+            padding: 0 5px;
+            font-size: 6rem;
+            font-weight: bold;
+            text-shadow: 
+                0 0 10px rgba(255, 221, 103, 0.9), 
+                0 0 20px rgba(255, 221, 103, 0.8), 
+                0 0 30px rgba(255, 221, 103, 0.7);
+            background: linear-gradient(45deg, #FFDD67, #FF8C00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: bounce 1.2s ease-in-out infinite alternate, glow 2s ease-in-out infinite;
+            animation-delay: calc(0.1s * var(--i));
+        }
+
+        /* BALLOONS & GIFTS */
+        .balloon {
+            max-width: 120px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .gifts {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .gift {
+            max-width: 100px;
+            opacity: 0;
+            transform: scale(0.5);
+            animation: popIn 1.5s ease-out 1s forwards, float 2s ease-in-out infinite;
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px #FFD700, 0 0 20px #FFA500; }
+            50% { text-shadow: 0 0 20px #FFD700, 0 0 30px #FFA500; }
+        }
+
+        /* SLIDE TRANSITIONS */
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+        }
+
+        /* Confetti Styling */
+        .confetti {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .confetti div {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #FFDD67;
+            animation: confetti-fall 4s infinite;
+            opacity: 0;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* BUTTON */
+        .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.5rem;
+            background-color: #FFDD67;
+            color:  #201f1f;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            z-index: 1000;
+        }
+
+        .btn:hover {
+            background-color: #FF8C00;
+        }
+
+        /* Fade out animation */
+        .fade-out {
+            animation: fadeOut 2s ease-in-out forwards;
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Confetti -->
+    <div class="confetti">
+        <div style="left: 10%; animation-delay: 0s;"></div>
+        <div style="left: 20%; animation-delay: 0.2s;"></div>
+        <div style="left: 30%; animation-delay: 0.4s;"></div>
+        <div style="left: 40%; animation-delay: 0.6s;"></div>
+        <div style="left: 50%; animation-delay: 0.8s;"></div>
+        <div style="left: 60%; animation-delay: 1s;"></div>
+        <div style="left: 70%; animation-delay: 1.2s;"></div>
+        <div style="left: 80%; animation-delay: 1.4s;"></div>
+        <div style="left: 90%; animation-delay: 1.6s;"></div>
+    </div>
+
+    <!-- First Slide -->
+    <div class="slide first--slide">
+        <div class="slide--content">
+            <h1>It's</h1>
+            <h2>Your Special Day!</h2>
+        </div>
+    </div>
+
+    <!-- Second Slide -->
+    <div class="slide third--canvas hidden">
+        <div class="center--line">
+            <img src="balloons.png" alt="balloons" class="balloon left">
+            <img src="balloons.png" alt="balloons" class="balloon right">
+            <h1>
+                <span style="--i:1">H</span>
+                <span style="--i:2">A</span>
+                <span style="--i:3">P</span>
+                <span style="--i:4">P</span>
+                <span style="--i:5">Y</span>
+                <span style="--i:6">&nbsp;</span>
+                <span style="--i:7">B</span>
+                <span style="--i:8">I</span>
+                <span style="--i:9">R</span>
+                <span style="--i:10">T</span>
+                <span style="--i:11">H</span>
+                <span style="--i:12">D</span>
+                <span style="--i:13">A</span>
+                <span style="--i:14">Y</span>
+            </h1>
+            <div class="gifts">
+                <img src="gift.png" alt="gift" class="gift">
+                <img src="gift.png" alt="gift" class="gift">
+                <img src="gift.png" alt="gift" class="gift">
+            </div>
+            <!-- Button moved inside the third--canvas div -->
+            <button class="btn" onclick="handleTransition()">Click here to continue</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const slides = document.querySelectorAll('.slide');
+
+            setTimeout(() => {
+                slides[0].classList.add('hidden');
+                slides[1].classList.remove('hidden');
+                slides[1].style.opacity = "1";
+                slides[1].style.transform = "translateY(0)";
+            }, 3500);
+        });
+
+        function handleTransition() {
+            document.body.classList.add('fade-out');
+            setTimeout(() => {
+                window.location.href = 'ind.html';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
